@@ -1,0 +1,31 @@
+{
+    "name": "roundcube/maintenance",
+    "type": "roundcube-plugin",
+    "description": "Maintenance announcement banner",
+    "keywords": ["mail","information"],
+    "homepage": "https://github.com/duk3luk3/roundcube-maintenance-banner",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Lukas Erlacher",
+            "email": "luke@lerlacher.de",
+            "homepage": "https://github.com/duk3luk3",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://plugins.roundcube.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "roundcube/plugin-installer": ">=0.1.6"
+    },
+    "extra": {
+        "roundcube": {
+            "min-version": "1.2.0"
+        }
+    }
+}
