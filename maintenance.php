@@ -19,6 +19,10 @@ class maintenance extends rcube_plugin
 	function init()
 	{
 		$this->rc = rcmail::get_instance();
+
+		if (!$this->rc || !$this->rc->output) {
+			return;
+		}
 		// load config
 		$this->load_config();
 		$this->maint_start = $this->rc->config->get('maintenance_start');
@@ -30,7 +34,7 @@ class maintenance extends rcube_plugin
 		$this->is_maint = (($now >= $this->maint_start) && ($now <= $this->maint_end));
 		$this->upcoming_maint = (($now >= $this->maint_start - $maint_pre) && ($now < $this->maint_start));
 
-		$this->api->output->set_env('maintenance_is_maint', $this->is_maint);
+		$this->rc->output->set_env('maintenance_is_maint', $this->is_maint);
 
 		if ($this->is_maint || $this->upcoming_maint)
 		{
