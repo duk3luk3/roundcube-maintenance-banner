@@ -36,6 +36,7 @@ class maintenance extends rcube_plugin
 		if ($this->is_maint || $this->upcoming_maint)
 		{
 			$this->include_script('maintenance.js');
+			$this->include_stylesheet($this->local_skin_path() .'/maintenance.css');
 			$this->add_hook('template_object_message', array($this, 'addMaintBanner'));
 			$this->add_texts('localization/', true);
 		}
@@ -49,7 +50,7 @@ class maintenance extends rcube_plugin
 				'end' => $this->rc->format_date($this->maint_end)
 			),
 		);
-		$p['content'] = '<div id="maintbanner" style="text-align:center; background-color:#F9EDBE;">'.$this->gettext($text).'</div>'.$p['content'];
+		$p['content'] = '<div id="maintbanner">'.$this->gettext($text).'</div>'.$p['content'];
 		return $p;
 	}
 }
