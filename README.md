@@ -12,6 +12,7 @@ Using the config, set the maintenance period. This will have the following effec
 
 * Up to `$config['maintenance_pre']` seconds before $config['maintenance_start'], a banner announcing the maintenance will be shown
 * Between `$config['maintenance_start']` and `$config['maintenance_end']`, a banner announcing that the maintenance is taking place will be shown. The login form will also be hidden.
+* If `$config['maintenance_light']` is set to `true`, the banner text will be different, and the login form will not be hidden.
 
 ## Customization
 

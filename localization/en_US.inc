@@ -18,6 +18,8 @@
 
 $labels = array();
 $labels['maintenanceBanner'] = 'Webmail is unavailable from $start to $end due to maintenace';
+$labels['maintenanceBannerLight'] = 'Webmail may be sporadically unavailable between $start and $end due to maintenace';
 $labels['preMaintenanceBanner'] = 'Webmail will be unavailable from $start to $end due to maintenace';
+$labels['preMaintenanceBannerLight'] = 'Webmail may be unavailable from $start to $end due to maintenace';
 
 ?>

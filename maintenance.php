@@ -28,13 +28,15 @@ class maintenance extends rcube_plugin
 		$this->maint_start = $this->rc->config->get('maintenance_start');
 		$this->maint_end = $this->rc->config->get('maintenance_end');
 		$maint_pre = $this->rc->config->get('maintenance_pre');
+		$this->maint_light = $this->rc->config->get('maintenance_light');
 		// calculate timeframe
 		$now = time();
 
 		$this->is_maint = (($now >= $this->maint_start) && ($now <= $this->maint_end));
 		$this->upcoming_maint = (($now >= $this->maint_start - $maint_pre) && ($now < $this->maint_start));
 
-		$this->rc->output->set_env('maintenance_is_maint', $this->is_maint);
+		$this->rc->output->set_env('maintenance_is_maint', $this->is_maint && !$this->maint_light);
+		$this->rc->output->set_env('maintenance_maint_light', $this->maint_light);
 
 		if ($this->is_maint || $this->upcoming_maint)
 		{
@@ -66,6 +68,9 @@ class maintenance extends rcube_plugin
 				'end' => $this->rc->format_date($this->maint_end)
 			),
 		);
+		if ($this->maint_light) {
+			$text['name'] .= 'Light';
+		}
 		return $this->gettext($text);
 	}
 
