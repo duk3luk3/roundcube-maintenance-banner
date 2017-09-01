@@ -48,7 +48,7 @@ class maintenance extends rcube_plugin
 				$this->include_stylesheet($this->local_skin_path() .'/maintenance.css');
 				$this->add_hook('template_object_message', array($this, 'addMaintBanner'));
 			}
-			else
+			else if (!$this->maint_light)
 			{
 				if (!isset($_SESSION['maintenance_banner_seen']) || !$_SESSION['maintenance_banner_seen'])
 				{
