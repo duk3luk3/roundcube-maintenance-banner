@@ -27,18 +27,20 @@ class maintenance extends rcube_plugin
 		$this->load_config();
 		$this->maint_start = $this->rc->config->get('maintenance_start');
 		$this->maint_end = $this->rc->config->get('maintenance_end');
-		$maint_pre = $this->rc->config->get('maintenance_pre');
-		$this->maint_light = $this->rc->config->get('maintenance_light');
+		$maint_pre = $this->rc->config->get('maintenance_pre', 0);
+		$maint_post = $this->rc->config->get('maintenance_post', 0);
+		$this->maint_light = $this->rc->config->get('maintenance_light', False);
 		// calculate timeframe
 		$now = time();
 
 		$this->is_maint = (($now >= $this->maint_start) && ($now <= $this->maint_end));
 		$this->upcoming_maint = (($now >= $this->maint_start - $maint_pre) && ($now < $this->maint_start));
+		$this->finished_maint = (($now <= $this->maint_end + $maint_post) && ($now > $this->maint_end));
 
 		$this->rc->output->set_env('maintenance_is_maint', $this->is_maint && !$this->maint_light);
 		$this->rc->output->set_env('maintenance_maint_light', $this->maint_light);
 
-		if ($this->is_maint || $this->upcoming_maint)
+		if ($this->is_maint || $this->upcoming_maint || $this->finished_maint)
 		{
 			$this->add_texts('localization/', true);
 
@@ -61,16 +63,25 @@ class maintenance extends rcube_plugin
 
 	function getMaintBannerText()
 	{
+		$text_name = '';
+		if ($this->upcoming_maint) {
+			$text_name = 'preMaintenanceBanner';
+		}
+		else if ($this->finished_maint) {
+			$text_name = 'postMaintenanceBanner';
+		} else {
+			$text_name = 'maintenanceBanner';
+		}
+		if ($this->maint_light && ($this->is_maint || $this->upcoming_maint)) {
+			$text_name .= 'Light';
+		}
 		$text = array(
-			'name' => ($this->is_maint) ? 'maintenanceBanner' : 'preMaintenanceBanner',
+			'name' => $text_name,
 			'vars' => array(
-				'start' => $this->rc->format_date($this->maint_start),
-				'end' => $this->rc->format_date($this->maint_end)
+				'start' => $this->rc->format_date($this->maint_start, $this->rc->config->get('date_long')),
+				'end' => $this->rc->format_date($this->maint_end, $this->rc->config->get('date_long'))
 			),
 		);
-		if ($this->maint_light) {
-			$text['name'] .= 'Light';
-		}
 		return $this->gettext($text);
 	}
 
