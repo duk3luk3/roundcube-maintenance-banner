@@ -1,5 +1,5 @@
 {
-    "name": "roundcube/maintenance",
+    "name": "duk3luk3/maintenance",
     "type": "roundcube-plugin",
     "description": "Maintenance announcement banner",
     "keywords": ["mail","information"],
