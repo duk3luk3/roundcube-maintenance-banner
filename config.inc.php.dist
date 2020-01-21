@@ -6,7 +6,7 @@ $config['maintenance_end'] = date_timestamp_get(date_create_from_format('Y-m-d H
 
 // 7 day maintenance announcement period
 $config['maintenance_pre'] = 7*24*3600;
-// 7 day after-maintenance information period
+// 3 day after-maintenance information period
 $config['maintenance_post'] = 3*24*3600;
 
 // maintenance "light"? (Do not disable login during maintenance period)
